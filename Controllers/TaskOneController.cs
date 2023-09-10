@@ -25,7 +25,7 @@ namespace HNGBACKENDTrack.Controllers
 
             return Ok ( new 
                 { 
-                    slack_name  = "HNGx" , 
+                    slack_name  = "Ahmad", 
                     current_day  = DateTime.Today.DayOfWeek.ToString(), 
                     utc_time  = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), 
                     track  = "backend", 
