@@ -1,4 +1,5 @@
-using HNGBACKENDTrack;
+﻿using HNGBACKENDTrack;
+using HNGBACKENDTrack.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,15 @@ var configuration = builder.Configuration
 builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 builder.WebHost.UseUrls($"http://*:{port}/");
 
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
 
 // Configure the HTTP request pipeline.
 /*if (app.Environment.IsDevelopment())
