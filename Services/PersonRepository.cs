@@ -9,22 +9,22 @@ namespace HNGBACKENDTrack.Services
         {
         }
 
-        public Task<BaseResponseDto> CreatePerson(PersonDto personDto)
+        public Task<BaseResponseDto> CreatePerson(string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponseDto> DeletePerson(long userId)
+        public Task<BaseResponseDto> DeletePerson(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponseDto> GetPerson(long userId)
+        public Task<BaseResponseDto> GetPerson(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponseDto> UpdatePerson(long userId)
+        public Task<BaseResponseDto> UpdatePerson(int userId)
         {
             throw new NotImplementedException();
         }

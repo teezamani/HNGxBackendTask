@@ -5,16 +5,16 @@ namespace HNGBACKENDTrack.Services.Interface
     public interface IPersonRepository
     {
         //CreatePerson
-        Task<BaseResponseDto> CreatePerson( PersonDto personDto);
+        Task<BaseResponseDto> CreatePerson( string name);
 
         //ReadPerson
-        Task<BaseResponseDto> GetPerson(long userId);
+        Task<BaseResponseDto> GetPerson(int userId);
 
         //UpdatePerson
-        Task<BaseResponseDto> UpdatePerson(long userId);
+        Task<BaseResponseDto> UpdatePerson(int userId);
 
         //DeletePerson
-        Task<BaseResponseDto> DeletePerson(long userId);
+        Task<BaseResponseDto> DeletePerson(int userId);
 
     }
 }

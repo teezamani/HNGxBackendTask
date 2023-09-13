@@ -12,8 +12,9 @@ namespace HNGBACKENDTrack.Model
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
         [Required]
+        [StringLength(50)]
         public string Name { get; set; }
     }
 }
