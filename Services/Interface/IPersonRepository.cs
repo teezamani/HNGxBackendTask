@@ -11,7 +11,7 @@ namespace HNGBACKENDTrack.Services.Interface
         Task<BaseResponseDto> GetPerson(int userId);
 
         //UpdatePerson
-        Task<BaseResponseDto> UpdatePerson(int userId);
+        Task<BaseResponseDto> UpdatePerson(int userId ,string Name);
 
         //DeletePerson
         Task<BaseResponseDto> DeletePerson(int userId);

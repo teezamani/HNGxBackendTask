@@ -30,7 +30,7 @@ builder.WebHost.UseUrls($"http://*:{port}/");
 builder.Services.AddDbContext<HNGxDBContext>(options => { options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")); });
 
 //Register Person service
-builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 //Register swagger
 builder.Services.AddSwaggerGen();
