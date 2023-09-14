@@ -1,4 +1,5 @@
 ﻿using HNGBACKENDTrack.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HNGBACKENDTrack.Services.Interface
 {
@@ -7,11 +8,10 @@ namespace HNGBACKENDTrack.Services.Interface
         //CreatePerson
         Task<BaseResponseDto> CreatePerson( string name);
 
-        //ReadPerson
+        //ReadPersonById
         Task<BaseResponseDto> GetPerson(int userId);
-
         //UpdatePerson
-        Task<BaseResponseDto> UpdatePerson(int userId ,string Name);
+        Task<BaseResponseDto> UpdatePerson(int user_id,  PersonNameRequestDto model);
 
         //DeletePerson
         Task<BaseResponseDto> DeletePerson(int userId);

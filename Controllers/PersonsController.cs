@@ -1,7 +1,10 @@
 ﻿using HNGBACKENDTrack.Dto;
 using HNGBACKENDTrack.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
+using System.Numerics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,30 +22,18 @@ namespace HNGBACKENDTrack.Controllers
             AppSettings = appSettings.Value;
             IPersonRepository = personRepository;
         }
-
-       /* // GET: api/<PersonsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<PersonsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-*/
-        // POST api/<PersonsController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string name)
+      
+        // GET api/5
+        [HttpGet("{user_id}")]
+        public async Task<IActionResult> Get([FromRoute]int user_id)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(name)) { return BadRequest(new BaseResponseDto(false ,400, "Name is required")); }
-                var callCreateMethod = await IPersonRepository.CreatePerson(name);
-                return Created("Created" , callCreateMethod);
+                //Call GetPersonby Id
+                var activity = await IPersonRepository.GetPerson(user_id);
+                if (activity.Status_code == 404) { return NotFound(activity); }
+
+                return Ok(activity);
             }
             catch (Exception ex)
             {
@@ -52,16 +43,62 @@ namespace HNGBACKENDTrack.Controllers
             }
         }
 
-      /*  // PUT api/<PersonsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // POST /api
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] PersonNameRequestDto model)
         {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(model.Name)) { return BadRequest(new BaseResponseDto(false ,400, "Name is required")); }
+                var callCreateMethod = await IPersonRepository.CreatePerson(model.Name);
+                return CreatedAtAction(null,callCreateMethod);
+            }
+            catch (Exception ex)
+            {
+                if (AppSettings.Environment == "DEV") { return StatusCode(500, new BaseResponseDto(false, 500, ex.Message)); }
+
+                return StatusCode(500, new BaseResponseDto(false, 500, AppSettings.FailedAttempt));
+            }
         }
 
-        // DELETE api/<PersonsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // PUT api/{user_id}
+        [HttpPut("{user_id}")]
+        public async Task<IActionResult> Put([FromRoute] int user_id ,  [FromBody] PersonNameRequestDto model)
         {
-        }*/
+            try
+            {   //Check if name is not an empty string              
+                if (string.IsNullOrWhiteSpace(model.Name)) { return BadRequest(new BaseResponseDto(false, 400, "Name is required")); }
+
+                //Call Update method
+                var activity = await IPersonRepository.UpdatePerson(user_id , model);
+                if (activity.Status_code == 404) { return NotFound(activity); }
+                    
+                return Ok(activity);
+            }
+            catch (Exception ex)
+            {
+                if (AppSettings.Environment == "DEV") { return StatusCode(500, new BaseResponseDto(false, 500, ex.Message)); }
+                return StatusCode(500, new BaseResponseDto(false, 500, AppSettings.FailedAttempt));
+            }
+        }
+
+        // DELETE api/{user_id}
+        [HttpDelete("{user_id}")]
+        public async Task<IActionResult> Delete([FromRoute]int user_id)
+        {
+            try
+            {         
+                //Call Delete method
+                var activity = await IPersonRepository.DeletePerson(user_id);
+                if (activity.Status_code == 404) { return NotFound(activity); }
+
+                return Ok(activity);
+            }
+            catch (Exception ex)
+            {
+                if (AppSettings.Environment == "DEV") { return StatusCode(500, new BaseResponseDto(false, 500, ex.Message)); }
+                return StatusCode(500, new BaseResponseDto(false, 500, AppSettings.FailedAttempt));
+            }
+        }
     }
 }
