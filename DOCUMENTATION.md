@@ -6,7 +6,8 @@ Sample Request and response for the endpoint
 
 # create Endpoint  
   HTTP Verb = POST 
-  Sample url = https://localhost:44326/api
+  Local url = http://localhost:44326
+  Live url = https://hngxbackendstageonetask-u5q5-dev.fl0.io/api
 **RequestBody**
     {
       "name": "Ahmad"
@@ -24,7 +25,8 @@ Sample Request and response for the endpoint
 
 # Read Endpoint  
   HTTP Verb = GET 
-  Sample url = https://localhost:44326/api/1
+  Local url = http://localhost:44326/api/1
+  Live url = https://hngxbackendstageonetask-u5q5-dev.fl0.io/api/1
 **RequestPath**
   {user_Id}
 **Response**
@@ -40,7 +42,8 @@ Sample Request and response for the endpoint
 
 # Update Endpoint  
    HTTP Verb = PUT 
-   Sample url = https://localhost:44326/api/1
+   Local url = http://localhost:44326/api/1
+   Live url = https://hngxbackendstageonetask-u5q5-dev.fl0.io/api/1
   **RequestPath**
     {user_Id}
 **RequestBody**
@@ -60,7 +63,8 @@ Sample Request and response for the endpoint
 
 # Delete Endpoint  
   HTTP Verb = DELETE
-  Sample url = https://localhost:44326/api/1
+   Local url = http://localhost:44326/api/1
+   Live url = https://hngxbackendstageonetask-u5q5-dev.fl0.io/api/1
 **RequestPath**
   {user_Id}
 **Response**
