@@ -26,7 +26,7 @@ namespace HNGBACKENDTrack.Services
                 if (!nameExist.Status) { return new BaseResponseDto(false,400, "Name already exist"); }
 
                 //Person object to create
-                var Person = new Person { Name = name.Trim()};
+                var Person = new Person { Name = name};
               
                 //use ORM to talk to Db and create the new person
                 var create = await HNGxDBContext.Persons.AddAsync(Person);
@@ -48,7 +48,7 @@ namespace HNGBACKENDTrack.Services
             try
             {
                 //Check If name exists
-                var getname = await HNGxDBContext.Persons.Where(x => x.Name == name.Trim()).FirstOrDefaultAsync();
+                var getname = await HNGxDBContext.Persons.Where(x => x.Name == name).FirstOrDefaultAsync();
                 if (getname == null) { return new BaseResponseDto(true); }
 
                 return new BaseResponseDto(false);
@@ -59,12 +59,12 @@ namespace HNGBACKENDTrack.Services
                 return new BaseResponseDto(false, 500, AppSettings.FailedAttempt);
             }
         }
-        public async Task<BaseResponseDto> DeletePerson(int userId)
+        public async Task<BaseResponseDto> DeletePerson(int Id)
         {
             try
             {
                 //Check if userId exists 
-                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == userId).FirstOrDefaultAsync();
+                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == Id).FirstOrDefaultAsync();
                 if (GetUserId == null) { return new BaseResponseDto(false, 404, "UserId Not  Found"); }
 
                 //Delete the UserId
@@ -82,13 +82,13 @@ namespace HNGBACKENDTrack.Services
             }
         }
 
-        public async Task<BaseResponseDto> GetPerson(int userId)
+        public async Task<BaseResponseDto> GetPerson(int Id)
         {
             try
             {
                 //Get the Person by  userId
-                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == userId).FirstOrDefaultAsync();
-                if(GetUserId == null) { return new BaseResponseDto(false, 404,"Not Found");}
+                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == Id).FirstOrDefaultAsync();
+                if (GetUserId == null) { return new BaseResponseDto(false, 404, "UserId Not  Found"); }
 
                 return new BaseResponseDto(true, 200, AppSettings.SuccessfullAttempt , new PersonDto { Id = GetUserId.Id , Name = GetUserId.Name}); 
             }
@@ -99,20 +99,20 @@ namespace HNGBACKENDTrack.Services
             }
         }
 
-        public async Task<BaseResponseDto> UpdatePerson(int user_id, PersonNameRequestDto model)
+        public async Task<BaseResponseDto> UpdatePerson(int Id, PersonNameRequestDto model)
         {
             try
             {
                 // get the person record 
-                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == user_id).FirstOrDefaultAsync();
+                var GetUserId = await HNGxDBContext.Persons.Where(d => d.Id == Id).FirstOrDefaultAsync();
                 if (GetUserId != null)
                 {
                     //check if name already exist
-                    var nameExist = await NameExists(model.Name.Trim());
+                    var nameExist = await NameExists(model.Name);
                     if (!nameExist.Status) { return new BaseResponseDto(false, 400, "Name already exist"); }
 
                     //Update
-                    GetUserId.Name = model.Name.Trim();
+                    GetUserId.Name = model.Name;
                     var SaveActivity = await HNGxDBContext.SaveChangesAsync();
 
                     if (SaveActivity > 0) { return new BaseResponseDto(true, 200, AppSettings.SuccessfullAttempt , new PersonDto { Id = GetUserId.Id , Name = GetUserId.Name} ); }

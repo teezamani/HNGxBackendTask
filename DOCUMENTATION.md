@@ -17,7 +17,7 @@ Sample Request and response for the endpoint
     "status_code": 201,
     "message": "Successfull",
     "data": {
-        "id": 3002,
+        "id": "1",
         "name": "Ahmad"
     }
 }
@@ -33,7 +33,7 @@ Sample Request and response for the endpoint
     "status_code": 200,
     "message": "Successfull",
     "data": {
-        "id": 1,
+       "id": "1",
         "name": "Ahmad"
     }
 }
@@ -53,7 +53,7 @@ Sample Request and response for the endpoint
     "status_code": 200,
     "message": "Successfull",
     "data": {
-        "id": 1,
+       "id": "1",
         "name": "Ahmad"
     }
 }

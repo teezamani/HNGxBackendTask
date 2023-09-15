@@ -9,12 +9,11 @@ namespace HNGBACKENDTrack.Services.Interface
         Task<BaseResponseDto> CreatePerson( string name);
 
         //ReadPersonById
-        Task<BaseResponseDto> GetPerson(int userId);
+        Task<BaseResponseDto> GetPerson(int Id);
         //UpdatePerson
-        Task<BaseResponseDto> UpdatePerson(int user_id,  PersonNameRequestDto model);
+        Task<BaseResponseDto> UpdatePerson(int Id,  PersonNameRequestDto model);
 
         //DeletePerson
-        Task<BaseResponseDto> DeletePerson(int userId);
-
+        Task<BaseResponseDto> DeletePerson(int Id);
     }
 }

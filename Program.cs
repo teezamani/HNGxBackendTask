@@ -27,10 +27,11 @@ builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"))
 builder.WebHost.UseUrls($"http://*:{port}/");
 
 //Register Conssole to use SQL
-builder.Services.AddDbContext<HNGxDBContext>(options => { options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")); });
+builder.Services.AddDbContext<HNGxDBContext>(options => { options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")); });
 
 //Register Person service
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IExplorerRepository, ExplorerRepository>();
 
 //Register swagger
 builder.Services.AddSwaggerGen();
