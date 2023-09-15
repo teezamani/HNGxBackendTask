@@ -1,4 +1,11 @@
-using HNGBACKENDTrack;
+﻿using HNGBACKENDTrack;
+using HNGBACKENDTrack.Controllers;
+using HNGBACKENDTrack.Model;
+using HNGBACKENDTrack.Services;
+using HNGBACKENDTrack.Services.Interface;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,11 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//Set the Configuration to map appsettings
-//var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
-//builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 
@@ -24,15 +26,25 @@ var configuration = builder.Configuration
 builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 builder.WebHost.UseUrls($"http://*:{port}/");
 
+//Register Conssole to use SQL
+builder.Services.AddDbContext<HNGxDBContext>(options => { options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")); });
+
+//Register Person service
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IExplorerRepository, ExplorerRepository>();
+
+//Register swagger
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-*/
+};
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
